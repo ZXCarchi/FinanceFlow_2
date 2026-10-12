@@ -122,7 +122,8 @@ const parseDecimal = (value) => {
   const normalized = String(value ?? "")
     .trim()
     .replace(/\s/g, "")
-    .replace(",", ".");
+    // Accept comma plus Arabic/full-width decimal separators used by phone keyboards.
+    .replace(/[,٫،，]/g, ".");
   if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)) return NaN;
   return Number(normalized);
 };
