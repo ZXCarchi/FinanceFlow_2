@@ -95,6 +95,16 @@ class APITests(TestCase):
         self.assertEqual(state['summary']['balance'], '100.00')
         self.assertEqual(state['category_spending'], [])
 
+    def test_decimal_comma_is_accepted_from_mobile_keyboards(self):
+        response = self.send('post', '/api/transactions/', self.tx_data(amount='10,50'))
+        self.assertEqual(response.status_code, 201, response.content)
+        self.assertEqual(response.json()['item']['amount'], '10.50')
+        response = self.send('patch', '/api/plan', {
+            'essential_pct': '50,25', 'lifestyle_pct': '29,75', 'savings_pct': '20,00',
+        })
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertEqual(response.json()['plan']['essential_pct'], '50.25')
+
     def test_ownership_on_foreign_keys_and_object_operations(self):
         other_goal = SavingsGoal.objects.create(user=self.other, name='Secret', target_amount=100)
         cases = [self.tx_data(wallet=self.other_wallet.pk), self.tx_data(category=self.other_category.pk)]

@@ -636,6 +636,25 @@ input[type="checkbox"] {
   align-items: center;
   gap: 15px;
 }
+
+.language-select {
+  min-width: 62px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 28px 0 12px;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.language-select:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  outline-offset: 2px;
+}
 .topbar-date {
   font-size: 11px;
   color: #64725e;

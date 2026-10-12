@@ -165,6 +165,9 @@ def clean_assignment(obj, data, allowed, user):
             valid_type = isinstance(raw, bool)
         elif isinstance(field, models.DecimalField):
             valid_type = isinstance(raw, (str, int, Decimal)) and not isinstance(raw, bool)
+            if isinstance(raw, str):
+                # Mobile decimal keyboards commonly enter a comma in European locales.
+                raw = raw.strip().replace(',', '.')
         elif isinstance(field, models.IntegerField):
             valid_type = isinstance(raw, int) and not isinstance(raw, bool)
         elif isinstance(field, models.DateField):

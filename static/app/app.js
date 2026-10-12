@@ -13,7 +13,8 @@ const routes = [
   "coach",
   "settings",
 ];
-const labels = {
+const labelsByLocale = {
+  en: {
   dashboard: "Overview",
   transactions: "Transactions",
   wallets: "Wallets",
@@ -23,6 +24,18 @@ const labels = {
   recurring: "Recurring payments",
   coach: "Money insights",
   settings: "Settings",
+  },
+  ru: {
+    dashboard: "Обзор",
+    transactions: "Операции",
+    wallets: "Кошельки",
+    goals: "Цели накоплений",
+    planner: "План бюджета",
+    reports: "Отчёты",
+    recurring: "Регулярные платежи",
+    coach: "Финансовые подсказки",
+    settings: "Настройки",
+  },
 };
 const routeIcons = {
   dashboard: "grid",
@@ -104,7 +117,23 @@ const esc = (value) =>
         c
       ],
   );
-const num = (value) => (Number.isFinite(Number(value)) ? Number(value) : 0);
+const parseDecimal = (value) => {
+  if (typeof value === "number") return Number.isFinite(value) ? value : NaN;
+  const normalized = String(value ?? "")
+    .trim()
+    .replace(/\s/g, "")
+    .replace(",", ".");
+  if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)) return NaN;
+  return Number(normalized);
+};
+const normalizeDecimal = (value) => {
+  const parsed = parseDecimal(value);
+  return Number.isFinite(parsed) ? String(parsed) : value;
+};
+const num = (value) => {
+  const parsed = parseDecimal(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
 const today = () => {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -120,9 +149,59 @@ const state = {
   requestId: 0,
   coachMessages: [],
   dialogReturn: null,
+  locale: localStorage.getItem("financeflow-language") === "ru" ? "ru" : "en",
 };
+const labels = new Proxy({}, { get: (_target, key) => labelsByLocale[state.locale][key] });
+const localeTag = () => (state.locale === "ru" ? "ru-RU" : "en-GB");
+const ruText = {
+  "YOUR WORKSPACE": "ВАШЕ ПРОСТРАНСТВО", MORE: "ЕЩЁ", Workspace: "Пространство",
+  "Personal workspace": "Личное пространство", "Your account": "Ваш аккаунт",
+  "Sign out": "Выйти", "Account settings": "Настройки аккаунта",
+  "A little progress, every day.": "Немного прогресса каждый день.",
+  "Small money habits.": "Небольшие финансовые привычки.",
+  "A more confident you.": "Больше уверенности в себе.",
+  "Your space. Your numbers. Your next move.": "Ваше пространство. Ваши цифры. Ваш следующий шаг.",
+  "Add transaction": "Добавить операцию", "Total balance": "Общий баланс",
+  "Money in": "Доходы", "Money out": "Расходы", "Savings rate": "Норма сбережений",
+  "Cash flow": "Движение денег", Income: "Доходы", Expenses: "Расходы",
+  "Where your money goes": "Куда уходят деньги", Details: "Подробнее",
+  "Recent transactions": "Последние операции", "View all": "Показать все",
+  "Transactions": "Операции", "Wallets": "Кошельки", "Savings goals": "Цели накоплений",
+  "Budget planner": "План бюджета", Reports: "Отчёты", "Recurring payments": "Регулярные платежи",
+  Settings: "Настройки", "Money insights": "Финансовые подсказки",
+  "Create account": "Создать аккаунт", "Sign in": "Войти", "Welcome back.": "С возвращением.",
+  "Email address": "Электронная почта", Password: "Пароль", "First name": "Имя",
+  "Confirm password": "Повторите пароль", "Expected monthly income": "Ожидаемый доход за месяц",
+  "Display currency": "Валюта", "Save preferences": "Сохранить настройки",
+  Essentials: "Основные расходы", Lifestyle: "Личные расходы", Savings: "Сбережения",
+  "Total allocation": "Всего распределено", "Save allocation": "Сохранить распределение",
+  Reset: "Сбросить", Update: "Обновить", Edit: "Изменить", Delete: "Удалить",
+  Cancel: "Отмена", "Save changes": "Сохранить изменения", Create: "Создать",
+  "Add a transaction": "Добавить операцию", "Transaction type": "Тип операции",
+  Amount: "Сумма", Description: "Описание", Wallet: "Кошелёк", Category: "Категория",
+  Date: "Дата", "No category": "Без категории", Expense: "Расход", Active: "Активен",
+  Paused: "Приостановлен", "Opening balance": "Начальный баланс", "Wallet name": "Название кошелька",
+  "Target date (optional)": "Дата цели (необязательно)", "Already saved": "Уже накоплено",
+  "Language": "Язык", "English": "English", "Russian": "Русский",
+};
+function translateDOM(root) {
+  document.documentElement.lang = state.locale;
+  if (state.locale !== "ru") return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    const raw = node.nodeValue, trimmed = raw.trim(), translated = ruText[trimmed];
+    if (translated) node.nodeValue = raw.replace(trimmed, translated);
+  }
+  root.querySelectorAll("[placeholder],[aria-label],[title]").forEach((element) => {
+    for (const attr of ["placeholder", "aria-label", "title"]) {
+      const value = element.getAttribute(attr);
+      if (value && ruText[value]) element.setAttribute(attr, ruText[value]);
+    }
+  });
+}
 const money = (value, options = {}) =>
-  new Intl.NumberFormat("en-GB", {
+  new Intl.NumberFormat(localeTag(), {
     style: "currency",
     currency: state.data?.profile?.currency || "PLN",
     minimumFractionDigits: 2,
@@ -130,31 +209,31 @@ const money = (value, options = {}) =>
     ...options,
   }).format(num(value));
 const plainMoney = (value) =>
-  new Intl.NumberFormat("en-GB", {
+  new Intl.NumberFormat(localeTag(), {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(num(value));
 const compactMoney = (value) =>
-  new Intl.NumberFormat("en-GB", {
+  new Intl.NumberFormat(localeTag(), {
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(num(value));
 const monthLabel = (value) =>
-  new Date(`${value}-02T12:00:00`).toLocaleDateString("en-GB", {
+  new Date(`${value}-02T12:00:00`).toLocaleDateString(localeTag(), {
     month: "long",
     year: "numeric",
   });
 const dateLabel = (value) =>
   value
     ? new Date(`${String(value).slice(0, 10)}T12:00:00`).toLocaleDateString(
-        "en-GB",
+        localeTag(),
         { day: "numeric", month: "short", year: "numeric" },
       )
     : "No deadline";
 const shortDate = (value) =>
   value
     ? new Date(`${String(value).slice(0, 10)}T12:00:00`).toLocaleDateString(
-        "en-GB",
+        localeTag(),
         { day: "numeric", month: "short" },
       )
     : "—";
@@ -308,14 +387,16 @@ function empty(
 function renderAuth() {
   document.title = `${state.authMode === "signup" ? "Create account" : "Welcome back"} · FinanceFlow`;
   const signup = state.authMode === "signup";
-  app.innerHTML = `<main id="main-content" class="auth-shell"><section class="auth-story" aria-label="About FinanceFlow"><a href="/" class="brand"><span class="brand-mark">f.</span><span>FinanceFlow</span></a><div class="auth-story-copy"><div class="eyebrow">A little clarity. A lot of possibility.</div><h1>Your money.<br>Your rhythm.<br><span>Your next chapter.</span></h1><p>A calmer place to manage your everyday money and make room for the things that matter.</p><div class="auth-benefits"><div>${icon("shield")}Private by design</div><div>${icon("target")}Built around your goals</div></div><div class="auth-mini-card" aria-hidden="true"><div class="auth-mini-top">Small steps, lasting progress<span>Your own pace</span></div><strong>Make space for your future.</strong><div class="auth-mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>A little intention goes a long way.</p></div></div><div class="auth-story-footer">${icon("leaf")}A fresh perspective on your finances.</div><div class="auth-orbit" aria-hidden="true"></div></section><section class="auth-form-side"><div class="auth-top">${signup ? "Already have an account?" : "New to FinanceFlow?"}${button(signup ? "Sign in" : "Create an account", "auth-switch", "", "btn-secondary")}</div><div class="auth-form-wrap"><div class="eyebrow">Your money, in focus</div><h2>${signup ? "Start your next chapter." : "Welcome back."}</h2><p class="subtitle">${signup ? "Create your account and give your money a little more direction." : "A little check-in can make a big difference.<br>Sign in to see where you stand."}</p><form class="auth-form" data-form="auth"><div class="form-error" role="alert"></div>${signup ? '<div class="form-field"><label for="auth-name">First name</label><input id="auth-name" name="first_name" autocomplete="given-name" maxlength="150" placeholder="Your first name" required></div>' : ""}<div class="form-field"><label for="auth-email">Email address</label><input id="auth-email" name="email" type="email" autocomplete="email" maxlength="150" placeholder="you@example.com" required></div><div class="form-field"><label for="auth-password">Password</label><input id="auth-password" name="password" type="password" autocomplete="${signup ? "new-password" : "current-password"}" ${signup ? 'minlength="10"' : ""} maxlength="128" placeholder="${signup ? "Create a strong password" : "Enter your password"}" required>${signup ? '<p class="field-help">Use at least 10 characters. Avoid common passwords or personal details.</p>' : ""}</div>${signup ? '<div class="form-field"><label for="auth-confirm">Confirm password</label><input id="auth-confirm" name="password_confirm" type="password" autocomplete="new-password" minlength="10" maxlength="128" placeholder="Enter your password again" required></div>' : ""}<button class="btn btn-primary" type="submit">${signup ? "Create account" : "Sign in"}${icon("arrow", "small")}</button></form><p class="auth-footnote">${icon("lock")}Your finances stay in your account.</p></div><div class="auth-bottom">FinanceFlow · Less guesswork. More peace of mind.</div></section></main>`;
+  app.innerHTML = `<main id="main-content" class="auth-shell"><section class="auth-story" aria-label="About FinanceFlow"><a href="/" class="brand"><span class="brand-mark">f.</span><span>FinanceFlow</span></a><div class="auth-story-copy"><div class="eyebrow">A little clarity. A lot of possibility.</div><h1>Your money.<br>Your rhythm.<br><span>Your next chapter.</span></h1><p>A calmer place to manage your everyday money and make room for the things that matter.</p><div class="auth-benefits"><div>${icon("shield")}Private by design</div><div>${icon("target")}Built around your goals</div></div><div class="auth-mini-card" aria-hidden="true"><div class="auth-mini-top">Small steps, lasting progress<span>Your own pace</span></div><strong>Make space for your future.</strong><div class="auth-mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>A little intention goes a long way.</p></div></div><div class="auth-story-footer">${icon("leaf")}A fresh perspective on your finances.</div><div class="auth-orbit" aria-hidden="true"></div></section><section class="auth-form-side"><div class="auth-top"><select class="language-select" data-language aria-label="Language"><option value="en" ${state.locale === "en" ? "selected" : ""}>EN</option><option value="ru" ${state.locale === "ru" ? "selected" : ""}>RU</option></select>${signup ? "Already have an account?" : "New to FinanceFlow?"}${button(signup ? "Sign in" : "Create an account", "auth-switch", "", "btn-secondary")}</div><div class="auth-form-wrap"><div class="eyebrow">Your money, in focus</div><h2>${signup ? "Start your next chapter." : "Welcome back."}</h2><p class="subtitle">${signup ? "Create your account and give your money a little more direction." : "A little check-in can make a big difference.<br>Sign in to see where you stand."}</p><form class="auth-form" data-form="auth"><div class="form-error" role="alert"></div>${signup ? '<div class="form-field"><label for="auth-name">First name</label><input id="auth-name" name="first_name" autocomplete="given-name" maxlength="150" placeholder="Your first name" required></div>' : ""}<div class="form-field"><label for="auth-email">Email address</label><input id="auth-email" name="email" type="email" autocomplete="email" maxlength="150" placeholder="you@example.com" required></div><div class="form-field"><label for="auth-password">Password</label><input id="auth-password" name="password" type="password" autocomplete="${signup ? "new-password" : "current-password"}" ${signup ? 'minlength="10"' : ""} maxlength="128" placeholder="${signup ? "Create a strong password" : "Enter your password"}" required>${signup ? '<p class="field-help">Use at least 10 characters. Avoid common passwords or personal details.</p>' : ""}</div>${signup ? '<div class="form-field"><label for="auth-confirm">Confirm password</label><input id="auth-confirm" name="password_confirm" type="password" autocomplete="new-password" minlength="10" maxlength="128" placeholder="Enter your password again" required></div>' : ""}<button class="btn btn-primary" type="submit">${signup ? "Create account" : "Sign in"}${icon("arrow", "small")}</button></form><p class="auth-footnote">${icon("lock")}Your finances stay in your account.</p></div><div class="auth-bottom">FinanceFlow · Less guesswork. More peace of mind.</div></section></main>`;
+  translateDOM(app);
 }
 function render() {
   if (!state.session?.authenticated) return renderAuth();
   if (!state.data) return;
   const page = state.route;
   document.title = `${labels[page]} · FinanceFlow`;
-  app.innerHTML = `<aside class="sidebar" id="sidebar" aria-label="Main navigation"><a href="/" data-route="dashboard" class="brand"><span class="brand-mark">f.</span><span class="brand-word">FinanceFlow</span></a><button class="icon-btn mobile-close" aria-label="Close navigation" data-action="close-nav">${icon("close")}</button><div class="nav-section-label">YOUR WORKSPACE</div><nav class="nav-list">${["dashboard", "transactions", "wallets", "goals", "planner", "reports", "recurring"].map((r) => `<a href="/${r === "dashboard" ? "" : r + "/"}" data-route="${r}" class="nav-link ${page === r ? "active" : ""}" ${page === r ? 'aria-current="page"' : ""} title="${labels[r]}">${icon(routeIcons[r])}<span>${labels[r]}</span></a>`).join("")}</nav><div class="nav-section-label secondary">MORE</div><nav class="nav-list secondary-nav">${["coach", "settings"].map((r) => `<a href="/${r}/" data-route="${r}" class="nav-link ${page === r ? "active" : ""}" ${page === r ? 'aria-current="page"' : ""} title="${labels[r]}">${icon(routeIcons[r])}<span>${labels[r]}</span></a>`).join("")}</nav><div class="sidebar-bottom"><div class="sidebar-note"><div class="note-icon">${icon("leaf", "small")}</div><h4>A little progress, every day.</h4><p>Small money habits.<br>A more confident you.</p></div><div class="sidebar-profile"><div class="avatar">${esc(initials())}</div><div class="profile-copy"><strong>${esc(state.session.user.first_name || "Your account")}</strong><span>Personal workspace</span></div><button class="icon-btn" data-action="logout" aria-label="Sign out" title="Sign out">${icon("logout", "small")}</button></div></div></aside><button class="sidebar-overlay" data-action="close-nav" aria-label="Close navigation" tabindex="-1"></button><div class="app-shell"><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" data-action="open-nav">${icon("menu")}</button><div class="breadcrumb">${icon("home")}<span class="crumb-root">Workspace</span><span class="crumb-separator">/</span><strong>${labels[page]}</strong></div></div><div class="topbar-tools"><span class="topbar-date">${icon("calendar", "small")}${esc(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }))}</span><span class="topbar-divider"></span><a href="/settings/" data-route="settings" class="avatar topbar-avatar" aria-label="Account settings">${esc(initials())}</a></div></header><main class="main-content" id="main-content">${renderPage()}<footer class="footer-note">${icon("lock")}Your space. Your numbers. Your next move.</footer></main></div>`;
+  app.innerHTML = `<aside class="sidebar" id="sidebar" aria-label="Main navigation"><a href="/" data-route="dashboard" class="brand"><span class="brand-mark">f.</span><span class="brand-word">FinanceFlow</span></a><button class="icon-btn mobile-close" aria-label="Close navigation" data-action="close-nav">${icon("close")}</button><div class="nav-section-label">YOUR WORKSPACE</div><nav class="nav-list">${["dashboard", "transactions", "wallets", "goals", "planner", "reports", "recurring"].map((r) => `<a href="/${r === "dashboard" ? "" : r + "/"}" data-route="${r}" class="nav-link ${page === r ? "active" : ""}" ${page === r ? 'aria-current="page"' : ""} title="${labels[r]}">${icon(routeIcons[r])}<span>${labels[r]}</span></a>`).join("")}</nav><div class="nav-section-label secondary">MORE</div><nav class="nav-list secondary-nav">${["coach", "settings"].map((r) => `<a href="/${r}/" data-route="${r}" class="nav-link ${page === r ? "active" : ""}" ${page === r ? 'aria-current="page"' : ""} title="${labels[r]}">${icon(routeIcons[r])}<span>${labels[r]}</span></a>`).join("")}</nav><div class="sidebar-bottom"><div class="sidebar-note"><div class="note-icon">${icon("leaf", "small")}</div><h4>A little progress, every day.</h4><p>Small money habits.<br>A more confident you.</p></div><div class="sidebar-profile"><div class="avatar">${esc(initials())}</div><div class="profile-copy"><strong>${esc(state.session.user.first_name || "Your account")}</strong><span>Personal workspace</span></div><button class="icon-btn" data-action="logout" aria-label="Sign out" title="Sign out">${icon("logout", "small")}</button></div></div></aside><button class="sidebar-overlay" data-action="close-nav" aria-label="Close navigation" tabindex="-1"></button><div class="app-shell"><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" data-action="open-nav">${icon("menu")}</button><div class="breadcrumb">${icon("home")}<span class="crumb-root">Workspace</span><span class="crumb-separator">/</span><strong>${labels[page]}</strong></div></div><div class="topbar-tools"><select class="language-select" data-language aria-label="Language"><option value="en" ${state.locale === "en" ? "selected" : ""}>EN</option><option value="ru" ${state.locale === "ru" ? "selected" : ""}>RU</option></select><span class="topbar-date">${icon("calendar", "small")}${esc(new Date().toLocaleDateString(localeTag(), { day: "numeric", month: "long", year: "numeric" }))}</span><span class="topbar-divider"></span><a href="/settings/" data-route="settings" class="avatar topbar-avatar" aria-label="Account settings">${esc(initials())}</a></div></header><main class="main-content" id="main-content">${renderPage()}<footer class="footer-note">${icon("lock")}Your space. Your numbers. Your next move.</footer></main></div>`;
+  translateDOM(app);
 }
 function monthPicker() {
   return `<label class="month-select">${icon("calendar")}<span class="sr-only">Reporting month</span><input type="month" name="month" data-action="month" value="${esc(state.month)}" min="1900-01" max="9998-12" required></label>`;
@@ -368,7 +449,7 @@ function cashFlowChart(trend) {
         const date = new Date(`${state.month}-02T12:00:00`);
         date.setMonth(date.getMonth() - 5 + i);
         return {
-          label: date.toLocaleDateString("en-GB", { month: "short" }),
+          label: date.toLocaleDateString(localeTag(), { month: "short" }),
           income: 0,
           expense: 0,
         };
@@ -395,7 +476,7 @@ function cashFlowChart(trend) {
       const center = left + step * (i + 0.5),
         iw = (num(x.income) / ceiling) * height,
         ew = (num(x.expense) / ceiling) * height;
-      return `<g><title>${esc(x.label || x.month)}: income ${esc(money(x.income))}, expenses ${esc(money(x.expense))}</title><rect class="income" x="${center - 20}" y="${top + height - iw}" width="16" height="${iw}" rx="3"/><rect class="expense" x="${center + 3}" y="${top + height - ew}" width="16" height="${ew}" rx="3"/><text x="${center}" y="192" text-anchor="middle">${esc(x.label || new Date(`${x.month}-02T12:00:00`).toLocaleDateString("en-GB", { month: "short" }))}</text></g>`;
+      return `<g><title>${esc(x.label || x.month)}: income ${esc(money(x.income))}, expenses ${esc(money(x.expense))}</title><rect class="income" x="${center - 20}" y="${top + height - iw}" width="16" height="${iw}" rx="3"/><rect class="expense" x="${center + 3}" y="${top + height - ew}" width="16" height="${ew}" rx="3"/><text x="${center}" y="192" text-anchor="middle">${esc(x.label || new Date(`${x.month}-02T12:00:00`).toLocaleDateString(localeTag(), { month: "short" }))}</text></g>`;
     })
     .join("")}</svg></figure>`;
 }
@@ -518,7 +599,7 @@ function plannerPage() {
   ]
     .map(
       (x) =>
-        `<div class="plan-field"><span class="category-icon">${icon(x.ico)}</span><div class="plan-label"><label for="${x.key}"><strong>${x.label}</strong></label><p>${x.help}</p></div><div class="input-unit"><input id="${x.key}" name="${x.key}" type="number" inputmode="decimal" min="0" max="100" step="0.01" value="${esc(p[x.key])}" required><span>%</span></div></div>`,
+        `<div class="plan-field"><span class="category-icon">${icon(x.ico)}</span><div class="plan-label"><label for="${x.key}"><strong>${x.label}</strong></label><p>${x.help}</p></div><div class="input-unit"><input id="${x.key}" name="${x.key}" type="text" inputmode="decimal" data-decimal min="0" max="100" value="${esc(p[x.key])}" required><span>%</span></div></div>`,
     )
     .join(
       "",
@@ -599,7 +680,7 @@ function recurringPage() {
 }
 function settingsPage() {
   const d = state.data;
-  return `${pageHeading("Your space, your preferences.", "A few small details to make FinanceFlow feel like yours.")}<div class="settings-layout"><div><section class="card card-padding settings-section"><h3>The essentials</h3><p class="section-subtitle">Keep your profile and planning details up to date.</p><div class="settings-account"><div class="avatar">${esc(initials())}</div><div><strong>${esc(d.user.first_name || "Your account")}</strong><p>${esc(d.user.email)}</p></div></div><form data-form="settings"><div class="form-error" role="alert"></div><div class="form-grid"><div class="form-field"><label for="first-name">First name</label><input id="first-name" name="first_name" value="${esc(d.user.first_name)}" maxlength="150" autocomplete="given-name" required></div><div class="form-field"><label for="currency">Display currency</label><select id="currency" name="currency">${["PLN", "EUR", "USD", "GBP", "KGS"].map((c) => `<option value="${c}" ${d.profile.currency === c ? "selected" : ""}>${c}</option>`).join("")}</select></div><div class="form-field full"><label for="expected-income">Expected monthly income</label><div class="input-unit"><input id="expected-income" name="expected_monthly_income" type="number" inputmode="decimal" min="0" max="9999999999.99" step="0.01" value="${esc(d.profile.expected_monthly_income)}" required><span>${esc(d.profile.currency)}</span></div><p class="field-help">Your budget uses this amount when it is higher than your recorded monthly income.</p></div></div><p class="currency-note">Changing your display currency changes labels only. Existing amounts are not converted between currencies.</p><div class="form-actions"><button class="btn btn-primary" type="submit">${icon("check", "small")}Save preferences</button></div></form></section><section class="card card-padding settings-section"><div class="card-header"><div><h2>Categories that fit your life</h2><p>Organize your money in a way that makes sense to you.</p></div>${button("Add", "add-category", "plus", "btn-secondary btn-small")}</div><div class="category-list">${d.categories.map((c) => `<div class="category-row"><span class="category-icon">${icon(categoryIcon(c.id))}</span><span class="category-label">${esc(c.name)}</span><span class="pill">${esc(c.kind === "both" ? "Income & expense" : c.kind)}</span><div class="table-actions"><button class="icon-btn" data-action="edit-category" data-id="${num(c.id)}" aria-label="Edit ${esc(c.name)}">${icon("edit")}</button><button class="icon-btn danger" data-action="delete-category" data-id="${num(c.id)}" aria-label="Delete ${esc(c.name)}">${icon("trash")}</button></div></div>`).join("")}</div></section></div><div><section class="card card-padding settings-section"><h3>A little peace of mind</h3><p class="section-subtitle">Your account keeps your money records in your own workspace.</p><div class="security-item">${icon("lock")}<div><strong>Private account access</strong><p>Your financial records are available only after signing in to your account.</p></div></div><div class="security-item">${icon("shield")}<div><strong>Protected sessions</strong><p>Account sessions and form requests use built-in security checks.</p></div></div><div class="security-item">${icon("download")}<div><strong>Your data, within reach</strong><p>Download your monthly transaction records whenever you need them.</p></div></div><div class="form-actions">${button("Export " + monthLabel(state.month), "export", "download", "btn-secondary")}</div></section><section class="card card-padding settings-section"><h3>Signing off for now?</h3><p class="section-subtitle">Your latest saved changes will be here when you return.</p>${button("Sign out", "logout", "logout", "btn-secondary")}</section></div></div>`;
+  return `${pageHeading("Your space, your preferences.", "A few small details to make FinanceFlow feel like yours.")}<div class="settings-layout"><div><section class="card card-padding settings-section"><h3>The essentials</h3><p class="section-subtitle">Keep your profile and planning details up to date.</p><div class="settings-account"><div class="avatar">${esc(initials())}</div><div><strong>${esc(d.user.first_name || "Your account")}</strong><p>${esc(d.user.email)}</p></div></div><form data-form="settings"><div class="form-error" role="alert"></div><div class="form-grid"><div class="form-field"><label for="first-name">First name</label><input id="first-name" name="first_name" value="${esc(d.user.first_name)}" maxlength="150" autocomplete="given-name" required></div><div class="form-field"><label for="currency">Display currency</label><select id="currency" name="currency">${["PLN", "EUR", "USD", "GBP", "KGS"].map((c) => `<option value="${c}" ${d.profile.currency === c ? "selected" : ""}>${c}</option>`).join("")}</select></div><div class="form-field full"><label for="expected-income">Expected monthly income</label><div class="input-unit"><input id="expected-income" name="expected_monthly_income" type="text" inputmode="decimal" data-decimal min="0" max="9999999999.99" value="${esc(d.profile.expected_monthly_income)}" required><span>${esc(d.profile.currency)}</span></div><p class="field-help">Your budget uses this amount when it is higher than your recorded monthly income.</p></div></div><p class="currency-note">Changing your display currency changes labels only. Existing amounts are not converted between currencies.</p><div class="form-actions"><button class="btn btn-primary" type="submit">${icon("check", "small")}Save preferences</button></div></form></section><section class="card card-padding settings-section"><div class="card-header"><div><h2>Categories that fit your life</h2><p>Organize your money in a way that makes sense to you.</p></div>${button("Add", "add-category", "plus", "btn-secondary btn-small")}</div><div class="category-list">${d.categories.map((c) => `<div class="category-row"><span class="category-icon">${icon(categoryIcon(c.id))}</span><span class="category-label">${esc(c.name)}</span><span class="pill">${esc(c.kind === "both" ? "Income & expense" : c.kind)}</span><div class="table-actions"><button class="icon-btn" data-action="edit-category" data-id="${num(c.id)}" aria-label="Edit ${esc(c.name)}">${icon("edit")}</button><button class="icon-btn danger" data-action="delete-category" data-id="${num(c.id)}" aria-label="Delete ${esc(c.name)}">${icon("trash")}</button></div></div>`).join("")}</div></section></div><div><section class="card card-padding settings-section"><h3>A little peace of mind</h3><p class="section-subtitle">Your account keeps your money records in your own workspace.</p><div class="security-item">${icon("lock")}<div><strong>Private account access</strong><p>Your financial records are available only after signing in to your account.</p></div></div><div class="security-item">${icon("shield")}<div><strong>Protected sessions</strong><p>Account sessions and form requests use built-in security checks.</p></div></div><div class="security-item">${icon("download")}<div><strong>Your data, within reach</strong><p>Download your monthly transaction records whenever you need them.</p></div></div><div class="form-actions">${button("Export " + monthLabel(state.month), "export", "download", "btn-secondary")}</div></section><section class="card card-padding settings-section"><h3>Signing off for now?</h3><p class="section-subtitle">Your latest saved changes will be here when you return.</p>${button("Sign out", "logout", "logout", "btn-secondary")}</section></div></div>`;
 }
 function coachPage() {
   return `${pageHeading("Small insights. Thoughtful next steps.", "Insights for the current calendar month.")}<div class="settings-layout"><section class="card card-padding"><div class="card-header"><div><h2>Your money check-in</h2><p>A local helper with simple rules. No external AI service.</p></div><span class="category-icon">${icon("sparkles")}</span></div><div class="info-box">Ask about this month’s income, spending, savings plan or your current balance. Replies use your recorded transactions and saved budget.</div><div id="coach-messages" class="coach-messages" aria-live="polite">${coachMessages()}</div><form data-form="coach"><div class="form-error" role="alert"></div><div class="form-field"><label for="coach-message">What would you like to understand?</label><textarea id="coach-message" name="message" maxlength="1000" placeholder="For example: How can I improve my savings?" required></textarea></div><div class="form-actions"><button class="btn btn-primary" type="submit">Ask for an insight${icon("arrow", "small")}</button></div></form></section><section class="card card-padding"><h3>A useful place to start</h3><p class="planner-intro">You do not need a perfect system. Start with a few habits that are easy to repeat.</p><div class="security-item">${icon("arrows")}<div><strong>Keep your records current</strong><p>A few minutes of tracking makes your overview more useful.</p></div></div><div class="security-item">${icon("pie")}<div><strong>Give your income a purpose</strong><p>Try a budget allocation, then adjust it to fit your life.</p></div></div><div class="security-item">${icon("target")}<div><strong>Pick one meaningful goal</strong><p>A clear target makes small contributions feel more tangible.</p></div></div><p class="info-box">These are general budgeting observations based on your records, not personalized financial advice. The helper uses the current calendar month.</p></section></div>`;
@@ -633,7 +714,7 @@ const field = (
 const selectField = (name, label, options, value, attrs = "", full = false) =>
   `<div class="form-field ${full ? "full" : ""}"><label for="field-${name}">${esc(label)}</label><select id="field-${name}" name="${name}" ${attrs}>${options.map((o) => `<option value="${esc(o.value)}" ${String(o.value) === String(value) ? "selected" : ""} ${o.disabled ? "disabled" : ""}>${esc(o.label)}</option>`).join("")}</select></div>`;
 const moneyAttrs =
-  'inputmode="decimal" step="0.01" min="0.01" max="9999999999.99" required';
+  'inputmode="decimal" data-decimal min="0.01" max="9999999999.99" required';
 function walletOptions(existing) {
   return state.data.wallets
     .filter((w) => w.is_active || String(w.id) === String(existing))
@@ -659,6 +740,7 @@ function categoryOptions(kind, selected) {
 function showDialog(title, description, content) {
   state.dialogReturn = document.activeElement;
   dialog.innerHTML = `<div class="dialog-heading"><h2 id="dialog-title">${esc(title)}</h2><button type="button" class="icon-btn" data-action="close-dialog" aria-label="Close dialog">${icon("close")}</button></div><p class="dialog-description" id="dialog-description">${esc(description)}</p>${content}`;
+  translateDOM(dialog);
   dialog.setAttribute("aria-describedby", "dialog-description");
   dialog.showModal();
   const first = dialog.querySelector(
@@ -718,8 +800,8 @@ function openEntity(type, id) {
         "opening_balance",
         "Opening balance",
         x.opening_balance ?? "0.00",
-        "number",
-        'inputmode="decimal" step="0.01" min="-9999999999.99" max="9999999999.99" required',
+        "text",
+        'inputmode="decimal" data-decimal min="-9999999999.99" max="9999999999.99" required',
         "Balance before the transactions you record.",
       ) +
       (editing
@@ -743,7 +825,7 @@ function openEntity(type, id) {
         "amount",
         `Amount (${state.data.profile.currency})`,
         x.amount || "",
-        "number",
+        "text",
         moneyAttrs,
       ) +
       field(
@@ -797,15 +879,15 @@ function openEntity(type, id) {
         "target_amount",
         `Target (${state.data.profile.currency})`,
         x.target_amount || "",
-        "number",
+        "text",
         moneyAttrs,
       ) +
       field(
         "saved_amount",
         `Already saved (${state.data.profile.currency})`,
         x.saved_amount ?? "0.00",
-        "number",
-        'inputmode="decimal" step="0.01" min="0" max="9999999999.99" required',
+        "text",
+        'inputmode="decimal" data-decimal min="0" max="9999999999.99" required',
       ) +
       field(
         "target_date",
@@ -847,7 +929,7 @@ function openEntity(type, id) {
         "monthly_limit",
         `Monthly limit (${state.data.profile.currency})`,
         x.monthly_limit || "",
-        "number",
+        "text",
         moneyAttrs,
         "This limit repeats every month. Spending is calculated for your selected reporting month.",
         true,
@@ -879,7 +961,7 @@ function openEntity(type, id) {
         "amount",
         `Amount (${state.data.profile.currency})`,
         x.amount || "",
-        "number",
+        "text",
         moneyAttrs,
       ) +
       selectField(
@@ -958,6 +1040,9 @@ function confirmDelete(type, id) {
 function entityPayload(form) {
   const values = Object.fromEntries(new FormData(form)),
     type = form.dataset.type;
+  form.querySelectorAll("[data-decimal]").forEach((input) => {
+    if (input.name in values) values[input.name] = normalizeDecimal(values[input.name]);
+  });
   for (const k of ["wallet", "category"])
     if (k in values) values[k] = values[k] === "" ? null : Number(values[k]);
   if ("day_of_month" in values)
@@ -980,6 +1065,22 @@ function validateWallet(form) {
   }
   return form.reportValidity();
 }
+function validateDecimalInputs(form) {
+  let valid = true;
+  form.querySelectorAll("[data-decimal]").forEach((input) => {
+    const value = parseDecimal(input.value);
+    const min = input.min === "" ? -Infinity : Number(input.min);
+    const max = input.max === "" ? Infinity : Number(input.max);
+    const message = !Number.isFinite(value)
+      ? state.locale === "ru" ? "Введите число, например 12,50." : "Enter a number, for example 12.50."
+      : value < min || value > max
+        ? state.locale === "ru" ? `Введите значение от ${min} до ${max}.` : `Enter a value from ${min} to ${max}.`
+        : "";
+    input.setCustomValidity(message);
+    if (message) valid = false;
+  });
+  return valid;
+}
 function setBusy(form, busy) {
   form.querySelectorAll("button[type=submit]").forEach((b) => {
     b.disabled = busy;
@@ -990,8 +1091,15 @@ async function submitForm(form) {
   if (form.dataset.busy === "true") return;
   const name = form.dataset.form;
   if (name === "entity" && !validateWallet(form)) return;
+  if (!validateDecimalInputs(form)) {
+    form.reportValidity();
+    return;
+  }
   if (!form.reportValidity()) return;
   const payload = Object.fromEntries(new FormData(form));
+  form.querySelectorAll("[data-decimal]").forEach((input) => {
+    if (input.name in payload) payload[input.name] = normalizeDecimal(payload[input.name]);
+  });
   if (
     name === "auth" &&
     state.authMode === "signup" &&
@@ -1198,6 +1306,7 @@ document.addEventListener("submit", (event) => {
   }
 });
 document.addEventListener("input", (event) => {
+  if (event.target.matches("[data-decimal]")) event.target.setCustomValidity("");
   if (event.target.id === "transaction-search") {
     state.filters.search = event.target.value;
     document.querySelector("#transaction-results").innerHTML =
@@ -1208,6 +1317,12 @@ document.addEventListener("input", (event) => {
 });
 document.addEventListener("change", async (event) => {
   const el = event.target;
+  if (el.matches("[data-language]")) {
+    state.locale = el.value === "ru" ? "ru" : "en";
+    localStorage.setItem("financeflow-language", state.locale);
+    render();
+    return;
+  }
   if (el.dataset.filter) {
     state.filters[el.dataset.filter] = el.value;
     document.querySelector("#transaction-results").innerHTML =
