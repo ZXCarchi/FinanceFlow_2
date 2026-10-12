@@ -25,16 +25,16 @@ const labelsByLocale = {
   coach: "Money insights",
   settings: "Settings",
   },
-  ru: {
-    dashboard: "Обзор",
-    transactions: "Операции",
-    wallets: "Кошельки",
-    goals: "Цели накоплений",
-    planner: "План бюджета",
-    reports: "Отчёты",
-    recurring: "Регулярные платежи",
-    coach: "Финансовые подсказки",
-    settings: "Настройки",
+  pl: {
+    dashboard: "Przegląd",
+    transactions: "Transakcje",
+    wallets: "Portfele",
+    goals: "Cele oszczędnościowe",
+    planner: "Plan budżetu",
+    reports: "Raporty",
+    recurring: "Płatności cykliczne",
+    coach: "Wskazówki finansowe",
+    settings: "Ustawienia",
   },
 };
 const routeIcons = {
@@ -150,54 +150,54 @@ const state = {
   requestId: 0,
   coachMessages: [],
   dialogReturn: null,
-  locale: localStorage.getItem("financeflow-language") === "ru" ? "ru" : "en",
+  locale: ["pl", "ru"].includes(localStorage.getItem("financeflow-language")) ? "pl" : "en",
 };
 const labels = new Proxy({}, { get: (_target, key) => labelsByLocale[state.locale][key] });
-const localeTag = () => (state.locale === "ru" ? "ru-RU" : "en-GB");
-const ruText = {
-  "YOUR WORKSPACE": "ВАШЕ ПРОСТРАНСТВО", MORE: "ЕЩЁ", Workspace: "Пространство",
-  "Personal workspace": "Личное пространство", "Your account": "Ваш аккаунт",
-  "Sign out": "Выйти", "Account settings": "Настройки аккаунта",
-  "A little progress, every day.": "Немного прогресса каждый день.",
-  "Small money habits.": "Небольшие финансовые привычки.",
-  "A more confident you.": "Больше уверенности в себе.",
-  "Your space. Your numbers. Your next move.": "Ваше пространство. Ваши цифры. Ваш следующий шаг.",
-  "Add transaction": "Добавить операцию", "Total balance": "Общий баланс",
-  "Money in": "Доходы", "Money out": "Расходы", "Savings rate": "Норма сбережений",
-  "Cash flow": "Движение денег", Income: "Доходы", Expenses: "Расходы",
-  "Where your money goes": "Куда уходят деньги", Details: "Подробнее",
-  "Recent transactions": "Последние операции", "View all": "Показать все",
-  "Transactions": "Операции", "Wallets": "Кошельки", "Savings goals": "Цели накоплений",
-  "Budget planner": "План бюджета", Reports: "Отчёты", "Recurring payments": "Регулярные платежи",
-  Settings: "Настройки", "Money insights": "Финансовые подсказки",
-  "Create account": "Создать аккаунт", "Sign in": "Войти", "Welcome back.": "С возвращением.",
-  "Email address": "Электронная почта", Password: "Пароль", "First name": "Имя",
-  "Confirm password": "Повторите пароль", "Expected monthly income": "Ожидаемый доход за месяц",
-  "Display currency": "Валюта", "Save preferences": "Сохранить настройки",
-  Essentials: "Основные расходы", Lifestyle: "Личные расходы", Savings: "Сбережения",
-  "Total allocation": "Всего распределено", "Save allocation": "Сохранить распределение",
-  Reset: "Сбросить", Update: "Обновить", Edit: "Изменить", Delete: "Удалить",
-  Cancel: "Отмена", "Save changes": "Сохранить изменения", Create: "Создать",
-  "Add a transaction": "Добавить операцию", "Transaction type": "Тип операции",
-  Amount: "Сумма", Description: "Описание", Wallet: "Кошелёк", Category: "Категория",
-  Date: "Дата", "No category": "Без категории", Expense: "Расход", Active: "Активен",
-  Paused: "Приостановлен", "Opening balance": "Начальный баланс", "Wallet name": "Название кошелька",
-  "Target date (optional)": "Дата цели (необязательно)", "Already saved": "Уже накоплено",
-  "Language": "Язык", "English": "English", "Russian": "Русский",
+const localeTag = () => (state.locale === "pl" ? "pl-PL" : "en-GB");
+const plText = {
+  "YOUR WORKSPACE": "TWOJA PRZESTRZEŃ", MORE: "WIĘCEJ", Workspace: "Przestrzeń",
+  "Personal workspace": "Przestrzeń osobista", "Your account": "Twoje konto",
+  "Sign out": "Wyloguj się", "Account settings": "Ustawienia konta",
+  "A little progress, every day.": "Mały postęp każdego dnia.",
+  "Small money habits.": "Dobre nawyki finansowe.",
+  "A more confident you.": "Więcej pewności siebie.",
+  "Your space. Your numbers. Your next move.": "Twoja przestrzeń. Twoje liczby. Twój następny krok.",
+  "Add transaction": "Dodaj transakcję", "Total balance": "Saldo całkowite",
+  "Money in": "Wpływy", "Money out": "Wydatki", "Savings rate": "Stopa oszczędności",
+  "Cash flow": "Przepływ pieniędzy", Income: "Dochody", Expenses: "Wydatki",
+  "Where your money goes": "Na co wydajesz", Details: "Szczegóły",
+  "Recent transactions": "Ostatnie transakcje", "View all": "Zobacz wszystkie",
+  Transactions: "Transakcje", Wallets: "Portfele", "Savings goals": "Cele oszczędnościowe",
+  "Budget planner": "Plan budżetu", Reports: "Raporty", "Recurring payments": "Płatności cykliczne",
+  Settings: "Ustawienia", "Money insights": "Wskazówki finansowe",
+  "Create account": "Utwórz konto", "Sign in": "Zaloguj się", "Welcome back.": "Witaj ponownie.",
+  "Email address": "Adres e-mail", Password: "Hasło", "First name": "Imię",
+  "Confirm password": "Potwierdź hasło", "Expected monthly income": "Oczekiwany miesięczny dochód",
+  "Display currency": "Waluta", "Save preferences": "Zapisz ustawienia",
+  Essentials: "Podstawowe wydatki", Lifestyle: "Wydatki osobiste", Savings: "Oszczędności",
+  "Total allocation": "Łączny podział", "Save allocation": "Zapisz podział",
+  Reset: "Resetuj", Update: "Aktualizuj", Edit: "Edytuj", Delete: "Usuń",
+  Cancel: "Anuluj", "Save changes": "Zapisz zmiany", Create: "Utwórz",
+  "Add a transaction": "Dodaj transakcję", "Transaction type": "Typ transakcji",
+  Amount: "Kwota", Description: "Opis", Wallet: "Portfel", Category: "Kategoria",
+  Date: "Data", "No category": "Bez kategorii", Expense: "Wydatek", Active: "Aktywna",
+  Paused: "Wstrzymana", "Opening balance": "Saldo początkowe", "Wallet name": "Nazwa portfela",
+  "Target date (optional)": "Data celu (opcjonalna)", "Already saved": "Już odłożono",
+  Language: "Język", English: "English", Polish: "Polski",
 };
 function translateDOM(root) {
   document.documentElement.lang = state.locale;
-  if (state.locale !== "ru") return;
+  if (state.locale !== "pl") return;
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   let node;
   while ((node = walker.nextNode())) {
-    const raw = node.nodeValue, trimmed = raw.trim(), translated = ruText[trimmed];
+    const raw = node.nodeValue, trimmed = raw.trim(), translated = plText[trimmed];
     if (translated) node.nodeValue = raw.replace(trimmed, translated);
   }
   root.querySelectorAll("[placeholder],[aria-label],[title]").forEach((element) => {
     for (const attr of ["placeholder", "aria-label", "title"]) {
       const value = element.getAttribute(attr);
-      if (value && ruText[value]) element.setAttribute(attr, ruText[value]);
+      if (value && plText[value]) element.setAttribute(attr, plText[value]);
     }
   });
 }
@@ -388,7 +388,7 @@ function empty(
 function renderAuth() {
   document.title = `${state.authMode === "signup" ? "Create account" : "Welcome back"} · FinanceFlow`;
   const signup = state.authMode === "signup";
-  app.innerHTML = `<main id="main-content" class="auth-shell"><section class="auth-story" aria-label="About FinanceFlow"><a href="/" class="brand"><span class="brand-mark">f.</span><span>FinanceFlow</span></a><div class="auth-story-copy"><div class="eyebrow">A little clarity. A lot of possibility.</div><h1>Your money.<br>Your rhythm.<br><span>Your next chapter.</span></h1><p>A calmer place to manage your everyday money and make room for the things that matter.</p><div class="auth-benefits"><div>${icon("shield")}Private by design</div><div>${icon("target")}Built around your goals</div></div><div class="auth-mini-card" aria-hidden="true"><div class="auth-mini-top">Small steps, lasting progress<span>Your own pace</span></div><strong>Make space for your future.</strong><div class="auth-mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>A little intention goes a long way.</p></div></div><div class="auth-story-footer">${icon("leaf")}A fresh perspective on your finances.</div><div class="auth-orbit" aria-hidden="true"></div></section><section class="auth-form-side"><div class="auth-top"><select class="language-select" data-language aria-label="Language"><option value="en" ${state.locale === "en" ? "selected" : ""}>EN</option><option value="ru" ${state.locale === "ru" ? "selected" : ""}>RU</option></select>${signup ? "Already have an account?" : "New to FinanceFlow?"}${button(signup ? "Sign in" : "Create an account", "auth-switch", "", "btn-secondary")}</div><div class="auth-form-wrap"><div class="eyebrow">Your money, in focus</div><h2>${signup ? "Start your next chapter." : "Welcome back."}</h2><p class="subtitle">${signup ? "Create your account and give your money a little more direction." : "A little check-in can make a big difference.<br>Sign in to see where you stand."}</p><form class="auth-form" data-form="auth"><div class="form-error" role="alert"></div>${signup ? '<div class="form-field"><label for="auth-name">First name</label><input id="auth-name" name="first_name" autocomplete="given-name" maxlength="150" placeholder="Your first name" required></div>' : ""}<div class="form-field"><label for="auth-email">Email address</label><input id="auth-email" name="email" type="email" autocomplete="email" maxlength="150" placeholder="you@example.com" required></div><div class="form-field"><label for="auth-password">Password</label><input id="auth-password" name="password" type="password" autocomplete="${signup ? "new-password" : "current-password"}" ${signup ? 'minlength="10"' : ""} maxlength="128" placeholder="${signup ? "Create a strong password" : "Enter your password"}" required>${signup ? '<p class="field-help">Use at least 10 characters. Avoid common passwords or personal details.</p>' : ""}</div>${signup ? '<div class="form-field"><label for="auth-confirm">Confirm password</label><input id="auth-confirm" name="password_confirm" type="password" autocomplete="new-password" minlength="10" maxlength="128" placeholder="Enter your password again" required></div>' : ""}<button class="btn btn-primary" type="submit">${signup ? "Create account" : "Sign in"}${icon("arrow", "small")}</button></form><p class="auth-footnote">${icon("lock")}Your finances stay in your account.</p></div><div class="auth-bottom">FinanceFlow · Less guesswork. More peace of mind.</div></section></main>`;
+  app.innerHTML = `<main id="main-content" class="auth-shell"><section class="auth-story" aria-label="About FinanceFlow"><a href="/" class="brand"><span class="brand-mark">f.</span><span>FinanceFlow</span></a><div class="auth-story-copy"><div class="eyebrow">A little clarity. A lot of possibility.</div><h1>Your money.<br>Your rhythm.<br><span>Your next chapter.</span></h1><p>A calmer place to manage your everyday money and make room for the things that matter.</p><div class="auth-benefits"><div>${icon("shield")}Private by design</div><div>${icon("target")}Built around your goals</div></div><div class="auth-mini-card" aria-hidden="true"><div class="auth-mini-top">Small steps, lasting progress<span>Your own pace</span></div><strong>Make space for your future.</strong><div class="auth-mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>A little intention goes a long way.</p></div></div><div class="auth-story-footer">${icon("leaf")}A fresh perspective on your finances.</div><div class="auth-orbit" aria-hidden="true"></div></section><section class="auth-form-side"><div class="auth-top"><select class="language-select" data-language aria-label="Language"><option value="en" ${state.locale === "en" ? "selected" : ""}>EN</option><option value="pl" ${state.locale === "pl" ? "selected" : ""}>PL</option></select>${signup ? "Already have an account?" : "New to FinanceFlow?"}${button(signup ? "Sign in" : "Create an account", "auth-switch", "", "btn-secondary")}</div><div class="auth-form-wrap"><div class="eyebrow">Your money, in focus</div><h2>${signup ? "Start your next chapter." : "Welcome back."}</h2><p class="subtitle">${signup ? "Create your account and give your money a little more direction." : "A little check-in can make a big difference.<br>Sign in to see where you stand."}</p><form class="auth-form" data-form="auth"><div class="form-error" role="alert"></div>${signup ? '<div class="form-field"><label for="auth-name">First name</label><input id="auth-name" name="first_name" autocomplete="given-name" maxlength="150" placeholder="Your first name" required></div>' : ""}<div class="form-field"><label for="auth-email">Email address</label><input id="auth-email" name="email" type="email" autocomplete="email" maxlength="150" placeholder="you@example.com" required></div><div class="form-field"><label for="auth-password">Password</label><input id="auth-password" name="password" type="password" autocomplete="${signup ? "new-password" : "current-password"}" ${signup ? 'minlength="10"' : ""} maxlength="128" placeholder="${signup ? "Create a strong password" : "Enter your password"}" required>${signup ? '<p class="field-help">Use at least 10 characters. Avoid common passwords or personal details.</p>' : ""}</div>${signup ? '<div class="form-field"><label for="auth-confirm">Confirm password</label><input id="auth-confirm" name="password_confirm" type="password" autocomplete="new-password" minlength="10" maxlength="128" placeholder="Enter your password again" required></div>' : ""}<button class="btn btn-primary" type="submit">${signup ? "Create account" : "Sign in"}${icon("arrow", "small")}</button></form><p class="auth-footnote">${icon("lock")}Your finances stay in your account.</p></div><div class="auth-bottom">FinanceFlow · Less guesswork. More peace of mind.</div></section></main>`;
   translateDOM(app);
 }
 function render() {
@@ -396,7 +396,7 @@ function render() {
   if (!state.data) return;
   const page = state.route;
   document.title = `${labels[page]} · FinanceFlow`;
-  app.innerHTML = `<aside class="sidebar" id="sidebar" aria-label="Main navigation"><a href="/" data-route="dashboard" class="brand"><span class="brand-mark">f.</span><span class="brand-word">FinanceFlow</span></a><button class="icon-btn mobile-close" aria-label="Close navigation" data-action="close-nav">${icon("close")}</button><div class="nav-section-label">YOUR WORKSPACE</div><nav class="nav-list">${["dashboard", "transactions", "wallets", "goals", "planner", "reports", "recurring"].map((r) => `<a href="/${r === "dashboard" ? "" : r + "/"}" data-route="${r}" class="nav-link ${page === r ? "active" : ""}" ${page === r ? 'aria-current="page"' : ""} title="${labels[r]}">${icon(routeIcons[r])}<span>${labels[r]}</span></a>`).join("")}</nav><div class="nav-section-label secondary">MORE</div><nav class="nav-list secondary-nav">${["coach", "settings"].map((r) => `<a href="/${r}/" data-route="${r}" class="nav-link ${page === r ? "active" : ""}" ${page === r ? 'aria-current="page"' : ""} title="${labels[r]}">${icon(routeIcons[r])}<span>${labels[r]}</span></a>`).join("")}</nav><div class="sidebar-bottom"><div class="sidebar-note"><div class="note-icon">${icon("leaf", "small")}</div><h4>A little progress, every day.</h4><p>Small money habits.<br>A more confident you.</p></div><div class="sidebar-profile"><div class="avatar">${esc(initials())}</div><div class="profile-copy"><strong>${esc(state.session.user.first_name || "Your account")}</strong><span>Personal workspace</span></div><button class="icon-btn" data-action="logout" aria-label="Sign out" title="Sign out">${icon("logout", "small")}</button></div></div></aside><button class="sidebar-overlay" data-action="close-nav" aria-label="Close navigation" tabindex="-1"></button><div class="app-shell"><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" data-action="open-nav">${icon("menu")}</button><div class="breadcrumb">${icon("home")}<span class="crumb-root">Workspace</span><span class="crumb-separator">/</span><strong>${labels[page]}</strong></div></div><div class="topbar-tools"><select class="language-select" data-language aria-label="Language"><option value="en" ${state.locale === "en" ? "selected" : ""}>EN</option><option value="ru" ${state.locale === "ru" ? "selected" : ""}>RU</option></select><span class="topbar-date">${icon("calendar", "small")}${esc(new Date().toLocaleDateString(localeTag(), { day: "numeric", month: "long", year: "numeric" }))}</span><span class="topbar-divider"></span><a href="/settings/" data-route="settings" class="avatar topbar-avatar" aria-label="Account settings">${esc(initials())}</a></div></header><main class="main-content" id="main-content">${renderPage()}<footer class="footer-note">${icon("lock")}Your space. Your numbers. Your next move.</footer></main></div>`;
+  app.innerHTML = `<aside class="sidebar" id="sidebar" aria-label="Main navigation"><a href="/" data-route="dashboard" class="brand"><span class="brand-mark">f.</span><span class="brand-word">FinanceFlow</span></a><button class="icon-btn mobile-close" aria-label="Close navigation" data-action="close-nav">${icon("close")}</button><div class="nav-section-label">YOUR WORKSPACE</div><nav class="nav-list">${["dashboard", "transactions", "wallets", "goals", "planner", "reports", "recurring"].map((r) => `<a href="/${r === "dashboard" ? "" : r + "/"}" data-route="${r}" class="nav-link ${page === r ? "active" : ""}" ${page === r ? 'aria-current="page"' : ""} title="${labels[r]}">${icon(routeIcons[r])}<span>${labels[r]}</span></a>`).join("")}</nav><div class="nav-section-label secondary">MORE</div><nav class="nav-list secondary-nav">${["coach", "settings"].map((r) => `<a href="/${r}/" data-route="${r}" class="nav-link ${page === r ? "active" : ""}" ${page === r ? 'aria-current="page"' : ""} title="${labels[r]}">${icon(routeIcons[r])}<span>${labels[r]}</span></a>`).join("")}</nav><div class="sidebar-bottom"><div class="sidebar-note"><div class="note-icon">${icon("leaf", "small")}</div><h4>A little progress, every day.</h4><p>Small money habits.<br>A more confident you.</p></div><div class="sidebar-profile"><div class="avatar">${esc(initials())}</div><div class="profile-copy"><strong>${esc(state.session.user.first_name || "Your account")}</strong><span>Personal workspace</span></div><button class="icon-btn" data-action="logout" aria-label="Sign out" title="Sign out">${icon("logout", "small")}</button></div></div></aside><button class="sidebar-overlay" data-action="close-nav" aria-label="Close navigation" tabindex="-1"></button><div class="app-shell"><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false" data-action="open-nav">${icon("menu")}</button><div class="breadcrumb">${icon("home")}<span class="crumb-root">Workspace</span><span class="crumb-separator">/</span><strong>${labels[page]}</strong></div></div><div class="topbar-tools"><select class="language-select" data-language aria-label="Language"><option value="en" ${state.locale === "en" ? "selected" : ""}>EN</option><option value="pl" ${state.locale === "pl" ? "selected" : ""}>PL</option></select><span class="topbar-date">${icon("calendar", "small")}${esc(new Date().toLocaleDateString(localeTag(), { day: "numeric", month: "long", year: "numeric" }))}</span><span class="topbar-divider"></span><a href="/settings/" data-route="settings" class="avatar topbar-avatar" aria-label="Account settings">${esc(initials())}</a></div></header><main class="main-content" id="main-content">${renderPage()}<footer class="footer-note">${icon("lock")}Your space. Your numbers. Your next move.</footer></main></div>`;
   translateDOM(app);
 }
 function monthPicker() {
@@ -1073,9 +1073,9 @@ function validateDecimalInputs(form) {
     const min = input.min === "" ? -Infinity : Number(input.min);
     const max = input.max === "" ? Infinity : Number(input.max);
     const message = !Number.isFinite(value)
-      ? state.locale === "ru" ? "Введите число, например 12,50." : "Enter a number, for example 12.50."
+      ? state.locale === "pl" ? "Wpisz liczbę, na przykład 12,50." : "Enter a number, for example 12.50."
       : value < min || value > max
-        ? state.locale === "ru" ? `Введите значение от ${min} до ${max}.` : `Enter a value from ${min} to ${max}.`
+        ? state.locale === "pl" ? `Wpisz wartość od ${min} do ${max}.` : `Enter a value from ${min} to ${max}.`
         : "";
     input.setCustomValidity(message);
     if (message) valid = false;
@@ -1319,7 +1319,7 @@ document.addEventListener("input", (event) => {
 document.addEventListener("change", async (event) => {
   const el = event.target;
   if (el.matches("[data-language]")) {
-    state.locale = el.value === "ru" ? "ru" : "en";
+    state.locale = el.value === "pl" ? "pl" : "en";
     localStorage.setItem("financeflow-language", state.locale);
     render();
     return;
