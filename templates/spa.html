@@ -1,0 +1,21 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183a30">
+  <meta name="description" content="A clearer view of your money. Track spending, plan your budget, and make room for what matters with FinanceFlow.">
+  <title>FinanceFlow — Your money, in focus</title>
+  <link rel="icon" type="image/svg+xml" href="{% static 'assets/logo-mark.svg' %}">
+  <link rel="stylesheet" href="{% static 'app/styles.css' %}">
+  <script type="module" src="{% static 'app/app.js' %}"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div id="app"><main class="boot-screen" id="main-content"><span class="boot-mark" aria-hidden="true">f.</span><p>Getting your finances in focus…</p><span class="spinner" aria-label="Loading"></span></main></div>
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+  <dialog id="app-dialog" class="app-dialog" aria-labelledby="dialog-title"></dialog>
+  <noscript><p class="noscript">Please enable JavaScript to use FinanceFlow.</p></noscript>
+</body>
+</html>

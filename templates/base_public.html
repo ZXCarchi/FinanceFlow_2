@@ -1,0 +1,7 @@
+{% load static i18n %}
+<!doctype html><html lang="{{ request.LANGUAGE_CODE|default:'en' }}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10172b"><title>{% block title %}FinanceFlow AI{% endblock %}</title><meta name="description" content="{% trans 'Smart personal finance manager for income, expenses, goals and budgets.' %}"><link rel="manifest" href="{% static 'manifest.webmanifest' %}"><link rel="icon" href="{% static 'assets/logo-mark.svg' %}"><link rel="stylesheet" href="{% static 'css/app.css' %}"></head>
+<body class="public-body">
+<header class="public-nav"><a class="brand" href="{% url 'landing' %}"><img src="{% static 'assets/logo-mark.svg' %}" alt=""><span>FinanceFlow <b>AI</b></span></a><div class="public-actions"><form class="lang-switch" action="{% url 'set_language' %}" method="post">{% csrf_token %}<input type="hidden" name="next" value="{{ request.path }}"><button name="language" value="en" class="lang-pill {% if request.LANGUAGE_CODE == 'en' %}active{% endif %}">EN</button><button name="language" value="pl" class="lang-pill {% if request.LANGUAGE_CODE == 'pl' %}active{% endif %}">PL</button></form>{% block nav_actions %}{% endblock %}</div></header>
+{% if messages %}<div class="flash-wrap">{% for message in messages %}<div class="flash {{ message.tags }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+{% block content %}{% endblock %}
+<script src="{% static 'js/app.js' %}" defer></script></body></html>

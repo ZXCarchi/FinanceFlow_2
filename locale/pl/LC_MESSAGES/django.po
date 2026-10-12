@@ -1,0 +1,816 @@
+msgid ""
+msgstr "Project-Id-Version: FinanceFlow AI\nLanguage: pl\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "%(category)s has used %(percent)s%% of its monthly limit."
+msgstr "Kategoria %(category)s wykorzystała %(percent)s%% miesięcznego limitu."
+
+msgid "%(category)s is above the monthly limit by %(amount)s."
+msgstr "Kategoria %(category)s przekracza miesięczny limit o %(amount)s."
+
+msgid "%(count)s recurring transactions added for this month."
+msgstr "Dodano %(count)s transakcji cyklicznych za ten miesiąc."
+
+msgid "18% saved this month"
+msgstr "18% zaoszczędzone w tym miesiącu"
+
+msgid "A practical monthly allocation based on your expected income, transactions and savings goals."
+msgstr "Praktyczny miesięczny podział oparty na oczekiwanych dochodach, transakcjach i celach oszczędnościowych."
+
+msgid "A practical target for this month is %(amount)s (%(percent)s%% of planned income). Start by moving this amount to savings soon after income arrives."
+msgstr "Praktyczny cel na ten miesiąc to %(amount)s (%(percent)s%% planowanego dochodu). Zacznij od odłożenia tej kwoty zaraz po otrzymaniu dochodu."
+
+msgid "Accounts"
+msgstr "Konta"
+
+msgid "Across active wallets"
+msgstr "Łącznie w aktywnych portfelach"
+
+msgid "Active"
+msgstr "Aktywne"
+
+msgid "Activity"
+msgstr "Aktywność"
+
+msgid "Adaptive"
+msgstr "Adaptacyjny"
+
+msgid "Adaptive spending targets, savings guidance, category limits and month-end forecasts."
+msgstr "Adaptacyjne cele wydatków, wskazówki oszczędnościowe, limity kategorii i prognozy na koniec miesiąca."
+
+msgid "Add a few expenses first. Then I can identify the categories with the strongest saving potential."
+msgstr "Najpierw dodaj kilka wydatków. Wtedy wskażę kategorie z największym potencjałem oszczędności."
+
+msgid "Add a transaction or clear the filters."
+msgstr "Dodaj transakcję lub wyczyść filtry."
+
+msgid "Add expenses to see a category breakdown."
+msgstr "Dodaj wydatki, aby zobaczyć podział na kategorie."
+
+msgid "Add more transactions to make the recommendations more precise."
+msgstr "Dodaj więcej transakcji, aby rekomendacje były dokładniejsze."
+
+msgid "Add only the basics now. You can create more wallets, goals and budgets after registration."
+msgstr "Teraz podaj tylko podstawowe dane. Po rejestracji możesz dodać kolejne portfele, cele i budżety."
+
+msgid "Add recurring item"
+msgstr "Dodaj pozycję cykliczną"
+
+msgid "Add transaction"
+msgstr "Dodaj transakcję"
+
+msgid "Add wallet"
+msgstr "Dodaj portfel"
+
+msgid "Add your first expense and the category analysis will appear here."
+msgstr "Dodaj pierwszy wydatek, a analiza kategorii pojawi się tutaj."
+
+msgid "Add your first wallet to start tracking money."
+msgstr "Dodaj pierwszy portfel, aby zacząć śledzić pieniądze."
+
+msgid "All categories"
+msgstr "Wszystkie kategorie"
+
+msgid "All types"
+msgstr "Wszystkie typy"
+
+msgid "Already registered?"
+msgstr "Masz już konto?"
+
+msgid "Already saved"
+msgstr "Już odłożono"
+
+msgid "Amount"
+msgstr "Kwota"
+
+msgid "An account with this email already exists."
+msgstr "Konto z tym adresem e-mail już istnieje."
+
+msgid "Analytics"
+msgstr "Analityka"
+
+msgid "Apply due items"
+msgstr "Dodaj należne pozycje"
+
+msgid "Ask Smart Coach"
+msgstr "Zapytaj Smart Coach"
+
+msgid "Ask about your budget…"
+msgstr "Zapytaj o swój budżet…"
+
+msgid "Ask simple budget questions. The coach answers from your own FinanceFlow data."
+msgstr "Zadawaj proste pytania o budżet. Coach odpowiada na podstawie Twoich danych w FinanceFlow."
+
+msgid "Automatic balance calculation"
+msgstr "Automatyczne obliczanie salda"
+
+msgid "Available balance"
+msgstr "Dostępne saldo"
+
+msgid "Average daily spending"
+msgstr "Średnie dzienne wydatki"
+
+msgid "Both"
+msgstr "Oba"
+
+msgid "Budget limit almost reached"
+msgstr "Limit budżetu prawie osiągnięty"
+
+msgid "Budget limit exceeded"
+msgstr "Przekroczono limit budżetu"
+
+msgid "Budget limit saved."
+msgstr "Limit budżetu zapisany."
+
+msgid "Budgeting guidance only — not investment or tax advice."
+msgstr "Wskazówki budżetowe — nie są poradą inwestycyjną ani podatkową."
+
+msgid "Built for students, employees and anyone who wants a calmer relationship with money."
+msgstr "Stworzone dla studentów, pracowników i każdego, kto chce spokojniej zarządzać pieniędzmi."
+
+msgid "Built-in budget intelligence"
+msgstr "Wbudowana inteligencja budżetowa"
+
+msgid "Card"
+msgstr "Karta"
+
+msgid "Cash"
+msgstr "Gotówka"
+
+msgid "Category"
+msgstr "Kategoria"
+
+msgid "Category limits"
+msgstr "Limity kategorii"
+
+msgid "Choose a currency, add your starting balance and expected monthly income. FinanceFlow builds the rest around your data."
+msgstr "Wybierz walutę, wpisz saldo początkowe i oczekiwany miesięczny dochód. FinanceFlow dopasuje resztę do Twoich danych."
+
+msgid "Coach"
+msgstr "Coach"
+
+msgid "Continue with the email and password you used to register."
+msgstr "Zaloguj się adresem e-mail i hasłem użytym podczas rejestracji."
+
+msgid "Create FinanceFlow account"
+msgstr "Utwórz konto FinanceFlow"
+
+msgid "Create a goal for a trip, emergency fund, laptop or anything else."
+msgstr "Utwórz cel na podróż, fundusz awaryjny, laptop lub cokolwiek innego."
+
+msgid "Create account"
+msgstr "Utwórz konto"
+
+msgid "Create goal"
+msgstr "Utwórz cel"
+
+msgid "Create my budget"
+msgstr "Utwórz mój budżet"
+
+msgid "Create savings goal"
+msgstr "Utwórz cel oszczędnościowy"
+
+msgid "Create savings goals, update progress and see what is still needed to reach them."
+msgstr "Twórz cele oszczędnościowe, aktualizuj postęp i sprawdzaj, ile jeszcze brakuje."
+
+msgid "Create wallet"
+msgstr "Utwórz portfel"
+
+msgid "Create your FinanceFlow account."
+msgstr "Utwórz swoje konto FinanceFlow."
+
+msgid "Create your first goal and FinanceFlow will include it in the smart plan."
+msgstr "Utwórz pierwszy cel, a FinanceFlow uwzględni go w inteligentnym planie."
+
+msgid "Created from recurring item"
+msgstr "Utworzono z pozycji cyklicznej"
+
+msgid "Currency"
+msgstr "Waluta"
+
+msgid "Current recommendation"
+msgstr "Aktualna rekomendacja"
+
+msgid "Daily spending average"
+msgstr "Średnie dzienne wydatki"
+
+msgid "Data export"
+msgstr "Eksport danych"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Day"
+msgstr "Dzień"
+
+msgid "Day of month"
+msgstr "Dzień miesiąca"
+
+msgid "Delete this transaction?"
+msgstr "Usunąć tę transakcję?"
+
+msgid "Download your transaction history as a CSV file whenever you need a copy."
+msgstr "Pobierz historię transakcji jako plik CSV, kiedy tylko potrzebujesz kopii."
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Email or password is incorrect."
+msgstr "Nieprawidłowy e-mail lub hasło."
+
+msgid "English + Polish"
+msgstr "Angielski + polski"
+
+msgid "English and Polish interface"
+msgstr "Interfejs po angielsku i polsku"
+
+msgid "Enter a valid amount."
+msgstr "Wpisz prawidłową kwotę."
+
+msgid "Entertainment, shopping and other optional expenses."
+msgstr "Rozrywka, zakupy i inne wydatki opcjonalne."
+
+msgid "Essentials"
+msgstr "Potrzeby podstawowe"
+
+msgid "Estimated month-end balance"
+msgstr "Szacowane saldo na koniec miesiąca"
+
+msgid "Expected monthly income"
+msgstr "Oczekiwany miesięczny dochód"
+
+msgid "Expense"
+msgstr "Wydatek"
+
+msgid "Expenses"
+msgstr "Wydatki"
+
+msgid "Expenses this month"
+msgstr "Wydatki w tym miesiącu"
+
+msgid "Explain my budget"
+msgstr "Wyjaśnij mój budżet"
+
+msgid "Export CSV"
+msgstr "Eksportuj CSV"
+
+msgid "Features"
+msgstr "Funkcje"
+
+msgid "Filter"
+msgstr "Filtruj"
+
+msgid "FinanceFlow AI turns income and daily spending into a clear budget, savings plan and month-end forecast. Add a transaction in seconds and let the smart engine do the math."
+msgstr "FinanceFlow AI zamienia dochody i codzienne wydatki w przejrzysty budżet, plan oszczędności i prognozę końca miesiąca. Dodaj transakcję w kilka sekund, a inteligentny silnik wykona obliczenia."
+
+msgid "Financial reports"
+msgstr "Raporty finansowe"
+
+msgid "Flexible"
+msgstr "Elastyczne"
+
+msgid "Flexible spending"
+msgstr "Wydatki elastyczne"
+
+msgid "Food"
+msgstr "Jedzenie"
+
+msgid "From date"
+msgstr "Data od"
+
+msgid "Future money"
+msgstr "Przyszłe środki"
+
+msgid "Goal name"
+msgstr "Nazwa celu"
+
+msgid "Goal progress updated."
+msgstr "Postęp celu zaktualizowany."
+
+msgid "Goals"
+msgstr "Cele"
+
+msgid "Goals that stay visible"
+msgstr "Cele zawsze na widoku"
+
+msgid "Good to see you, %(name)s."
+msgstr "Miło Cię widzieć, %(name)s."
+
+msgid "Guardrail"
+msgstr "Limit ochronny"
+
+msgid "Guardrails"
+msgstr "Limity ochronne"
+
+msgid "Healthy savings target"
+msgstr "Zdrowy cel oszczędnościowy"
+
+msgid "Here is your financial picture for the current month."
+msgstr "Oto Twój obraz finansów w bieżącym miesiącu."
+
+msgid "Hi! I can help you decide how much to save, what spending to review, what is left, or explain your monthly plan."
+msgstr "Cześć! Pomogę Ci ustalić, ile oszczędzać, które wydatki przejrzeć, ile zostało środków oraz wyjaśnię miesięczny plan."
+
+msgid "High monthly spending"
+msgstr "Wysokie miesięczne wydatki"
+
+msgid "Home"
+msgstr "Start"
+
+msgid "Housing"
+msgstr "Mieszkanie"
+
+msgid "Housing, food, transport, health and education."
+msgstr "Mieszkanie, jedzenie, transport, zdrowie i edukacja."
+
+msgid "How much is left?"
+msgstr "Ile mi zostało?"
+
+msgid "How much should I save?"
+msgstr "Ile powinienem oszczędzać?"
+
+msgid "I already have an account"
+msgstr "Mam już konto"
+
+msgid "Icon"
+msgstr "Ikona"
+
+msgid "Income"
+msgstr "Dochód"
+
+msgid "Income minus expenses"
+msgstr "Dochód minus wydatki"
+
+msgid "Income this month"
+msgstr "Dochód w tym miesiącu"
+
+msgid "Income vs. expenses"
+msgstr "Dochody i wydatki"
+
+msgid "Income, expenses, wallets, categories, filters and transaction history in one clean workspace."
+msgstr "Dochody, wydatki, portfele, kategorie, filtry i historia transakcji w jednym przejrzystym miejscu."
+
+msgid "It only takes a few fields."
+msgstr "Wystarczy kilka pól."
+
+msgid "Item"
+msgstr "Pozycja"
+
+msgid "Keep cards, cash and savings balances separated but visible together."
+msgstr "Oddziel salda kart, gotówki i oszczędności, ale miej je widoczne razem."
+
+msgid "Keep salary, rent, subscriptions and other repeating items visible in one place."
+msgstr "Trzymaj wypłatę, czynsz, subskrypcje i inne cykliczne pozycje w jednym miejscu."
+
+msgid "Know where your money"
+msgstr "Wiedz, dokąd Twoje pieniądze"
+
+msgid "Language switch"
+msgstr "Zmiana języka"
+
+msgid "Last 6 months"
+msgstr "Ostatnie 6 miesięcy"
+
+msgid "Live plan"
+msgstr "Plan na żywo"
+
+msgid "Main wallet"
+msgstr "Główny portfel"
+
+msgid "Manage"
+msgstr "Zarządzaj"
+
+msgid "Money activity"
+msgstr "Przepływy pieniężne"
+
+msgid "Monthly limit"
+msgstr "Miesięczny limit"
+
+msgid "Name"
+msgstr "Imię"
+
+msgid "New here?"
+msgstr "Nie masz konta?"
+
+msgid "No bank connection required"
+msgstr "Bez łączenia z bankiem"
+
+msgid "No category limits yet. Add one for categories you want to control closely."
+msgstr "Nie masz jeszcze limitów kategorii. Dodaj limit dla kategorii, które chcesz kontrolować dokładniej."
+
+msgid "No deadline"
+msgstr "Bez terminu"
+
+msgid "No expenses yet"
+msgstr "Brak wydatków"
+
+msgid "No matching transactions"
+msgstr "Brak pasujących transakcji"
+
+msgid "No recurring items yet."
+msgstr "Brak pozycji cyklicznych."
+
+msgid "No savings goals yet"
+msgstr "Brak celów oszczędnościowych"
+
+msgid "Note"
+msgstr "Notatka"
+
+msgid "On track"
+msgstr "Zgodnie z planem"
+
+msgid "Open FinanceFlow"
+msgstr "Otwórz FinanceFlow"
+
+msgid "Open full planner"
+msgstr "Otwórz pełny planer"
+
+msgid "Opening"
+msgstr "Początkowo"
+
+msgid "Opening balance"
+msgstr "Saldo początkowe"
+
+msgid "Optional note"
+msgstr "Opcjonalna notatka"
+
+msgid "Other"
+msgstr "Inne"
+
+msgid "Overview"
+msgstr "Przegląd"
+
+msgid "Part-time work"
+msgstr "Praca dorywcza"
+
+msgid "Password"
+msgstr "Hasło"
+
+msgid "Paused"
+msgstr "Wstrzymane"
+
+msgid "Personal finance workspace"
+msgstr "Panel finansów osobistych"
+
+msgid "Personal settings"
+msgstr "Ustawienia osobiste"
+
+msgid "Plan"
+msgstr "Plan"
+
+msgid "Plan is ready"
+msgstr "Plan jest gotowy"
+
+msgid "Planning income"
+msgstr "Dochód do planowania"
+
+msgid "Please check the budget fields."
+msgstr "Sprawdź pola budżetu."
+
+msgid "Please check the goal fields."
+msgstr "Sprawdź pola celu."
+
+msgid "Please check the recurring payment fields."
+msgstr "Sprawdź pola płatności cyklicznej."
+
+msgid "Please check the transaction fields."
+msgstr "Sprawdź pola transakcji."
+
+msgid "Please check the wallet fields."
+msgstr "Sprawdź pola portfela."
+
+msgid "Preferences"
+msgstr "Preferencje"
+
+msgid "Privacy note"
+msgstr "Informacja o prywatności"
+
+msgid "Private account data"
+msgstr "Prywatne dane konta"
+
+msgid "Private by design"
+msgstr "Prywatność w projekcie"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Projected expenses"
+msgstr "Prognozowane wydatki"
+
+msgid "Projected month-end balance"
+msgstr "Prognozowane saldo na koniec miesiąca"
+
+msgid "Quick entry"
+msgstr "Szybkie dodawanie"
+
+msgid "Recent transactions"
+msgstr "Ostatnie transakcje"
+
+msgid "Record every income and expense, then filter the history when you need it."
+msgstr "Zapisuj każdy dochód i wydatek, a następnie filtruj historię, kiedy jej potrzebujesz."
+
+msgid "Recorded income"
+msgstr "Zarejestrowany dochód"
+
+msgid "Recorded spending"
+msgstr "Zarejestrowane wydatki"
+
+msgid "Recurring"
+msgstr "Cykliczne"
+
+msgid "Recurring item saved."
+msgstr "Pozycja cykliczna zapisana."
+
+msgid "Recurring payments"
+msgstr "Płatności cykliczne"
+
+msgid "Register in under a minute. Start planning immediately."
+msgstr "Zarejestruj się w mniej niż minutę. Zacznij planować od razu."
+
+msgid "Remaining"
+msgstr "Pozostało"
+
+msgid "Reports"
+msgstr "Raporty"
+
+msgid "Reserve for goals and financial buffer."
+msgstr "Rezerwa na cele i poduszkę finansową."
+
+msgid "Reset"
+msgstr "Wyczyść"
+
+msgid "Routine money"
+msgstr "Stałe przepływy"
+
+msgid "Save 800 PLN this month"
+msgstr "Odłóż 800 PLN w tym miesiącu"
+
+msgid "Save limit"
+msgstr "Zapisz limit"
+
+msgid "Save recurring item"
+msgstr "Zapisz pozycję cykliczną"
+
+msgid "Save settings"
+msgstr "Zapisz ustawienia"
+
+msgid "Save transaction"
+msgstr "Zapisz transakcję"
+
+msgid "Savings"
+msgstr "Oszczędności"
+
+msgid "Savings & goals"
+msgstr "Oszczędności i cele"
+
+msgid "Savings goal created."
+msgstr "Cel oszczędnościowy utworzony."
+
+msgid "Savings goals"
+msgstr "Cele oszczędnościowe"
+
+msgid "Savings goals and forecasts"
+msgstr "Cele oszczędnościowe i prognozy"
+
+msgid "Savings progress"
+msgstr "Postęp oszczędzania"
+
+msgid "Savings rate"
+msgstr "Stopa oszczędzania"
+
+msgid "Search transactions"
+msgstr "Szukaj transakcji"
+
+msgid "See all"
+msgstr "Zobacz wszystkie"
+
+msgid "See category breakdowns, six-month trends and export your transaction data to CSV."
+msgstr "Zobacz podział kategorii, trendy z sześciu miesięcy i eksportuj dane transakcji do CSV."
+
+msgid "Send"
+msgstr "Wyślij"
+
+msgid "Set category limit"
+msgstr "Ustaw limit kategorii"
+
+msgid "Settings"
+msgstr "Ustawienia"
+
+msgid "Settings saved."
+msgstr "Ustawienia zapisane."
+
+msgid "Sign in"
+msgstr "Zaloguj się"
+
+msgid "Sign in to FinanceFlow"
+msgstr "Zaloguj się do FinanceFlow"
+
+msgid "Sign out"
+msgstr "Wyloguj się"
+
+msgid "Simple setup"
+msgstr "Prosta konfiguracja"
+
+msgid "Smart Coach"
+msgstr "Smart Coach"
+
+msgid "Smart budget engine"
+msgstr "Inteligentny silnik budżetowy"
+
+msgid "Smart insights"
+msgstr "Inteligentne wskazówki"
+
+msgid "Smart monthly budget plan"
+msgstr "Inteligentny miesięczny plan budżetu"
+
+msgid "Smart monthly plan"
+msgstr "Inteligentny plan miesięczny"
+
+msgid "Smart personal budget assistant"
+msgstr "Inteligentny asystent budżetu osobistego"
+
+msgid "Smart personal finance manager for income, expenses, goals and budgets."
+msgstr "Inteligentny menedżer finansów osobistych do dochodów, wydatków, celów i budżetów."
+
+msgid "Smart plan"
+msgstr "Inteligentny plan"
+
+msgid "Smart planner"
+msgstr "Inteligentny planer"
+
+msgid "Spending distribution"
+msgstr "Struktura wydatków"
+
+msgid "Spending map"
+msgstr "Mapa wydatków"
+
+msgid "Start free"
+msgstr "Zacznij bezpłatnie"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Suggested savings"
+msgstr "Sugerowane oszczędności"
+
+msgid "Suggested savings target: %(pct)s%% of planned income."
+msgstr "Sugerowany cel oszczędności: %(pct)s%% planowanego dochodu."
+
+msgid "Target"
+msgstr "Termin"
+
+msgid "Target amount"
+msgstr "Kwota docelowa"
+
+msgid "Target date"
+msgstr "Data docelowa"
+
+msgid "The coach could not respond right now."
+msgstr "Coach nie może teraz odpowiedzieć."
+
+msgid "This month"
+msgstr "Ten miesiąc"
+
+msgid "This month you have %(income)s income and %(expenses)s expenses. Ask me how much to save, what to reduce, how much is left, or for a budget plan."
+msgstr "W tym miesiącu masz %(income)s dochodu i %(expenses)s wydatków. Zapytaj, ile oszczędzać, co ograniczyć, ile zostało lub poproś o plan budżetu."
+
+msgid "This version uses a local rule-based coach. Your questions are not sent to an external AI service."
+msgstr "Ta wersja korzysta z lokalnego doradcy opartego na regułach. Twoje pytania nie są wysyłane do zewnętrznej usługi AI."
+
+msgid "Title"
+msgstr "Tytuł"
+
+msgid "To date"
+msgstr "Data do"
+
+msgid "Today"
+msgstr "Dzisiaj"
+
+msgid "Top categories"
+msgstr "Największe kategorie"
+
+msgid "Top spending"
+msgstr "Największe wydatki"
+
+msgid "Total balance"
+msgstr "Łączne saldo"
+
+msgid "Track everything"
+msgstr "Śledź wszystko"
+
+msgid "Transaction"
+msgstr "Transakcja"
+
+msgid "Transaction added."
+msgstr "Transakcja dodana."
+
+msgid "Transaction deleted."
+msgstr "Transakcja usunięta."
+
+msgid "Transactions"
+msgstr "Transakcje"
+
+msgid "Transport"
+msgstr "Transport"
+
+msgid "Turn a target amount into visible progress you can update at any time."
+msgstr "Zamień kwotę docelową w widoczny postęp, który możesz aktualizować w dowolnym momencie."
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Uncategorized"
+msgstr "Bez kategorii"
+
+msgid "Understand where money is going and how your income and expenses are changing."
+msgstr "Zobacz, dokąd trafiają pieniądze oraz jak zmieniają się Twoje dochody i wydatki."
+
+msgid "Update"
+msgstr "Aktualizuj"
+
+msgid "Update the basic assumptions FinanceFlow uses for your budget."
+msgstr "Zaktualizuj podstawowe założenia, których FinanceFlow używa do Twojego budżetu."
+
+msgid "Use the EN / PL control in the top bar at any time. Your current page stays open after the switch."
+msgstr "W każdej chwili użyj przełącznika EN / PL w górnym pasku. Po zmianie języka pozostaniesz na tej samej stronie."
+
+msgid "Useful reports"
+msgstr "Przydatne raporty"
+
+msgid "Uses recorded or expected monthly income"
+msgstr "Wykorzystuje zapisany lub oczekiwany miesięczny dochód"
+
+msgid "Utilities"
+msgstr "Media"
+
+msgid "View report"
+msgstr "Zobacz raport"
+
+msgid "Wallet"
+msgstr "Portfel"
+
+msgid "Wallet added."
+msgstr "Portfel dodany."
+
+msgid "Wallet balance"
+msgstr "Saldo portfela"
+
+msgid "Wallet name"
+msgstr "Nazwa portfela"
+
+msgid "Wallet type"
+msgstr "Typ portfela"
+
+msgid "Wallets"
+msgstr "Portfele"
+
+msgid "Welcome back"
+msgstr "Witaj ponownie"
+
+msgid "What should I reduce?"
+msgstr "Co powinienem ograniczyć?"
+
+msgid "What to do next"
+msgstr "Co zrobić dalej"
+
+msgid "You have already spent more than 80% of your planned monthly income."
+msgstr "Wydałeś już ponad 80% planowanego miesięcznego dochodu."
+
+msgid "Your budget data stays in your own database."
+msgstr "Twoje dane budżetowe pozostają w Twojej własnej bazie danych."
+
+msgid "Your current smart plan is %(essential)s%% essentials, %(lifestyle)s%% flexible spending and %(savings)s%% savings. The plan adapts to your transactions and goals."
+msgstr "Twój aktualny inteligentny plan to %(essential)s%% na potrzeby podstawowe, %(lifestyle)s%% na wydatki elastyczne i %(savings)s%% na oszczędności. Plan dopasowuje się do transakcji i celów."
+
+msgid "Your current total wallet balance is %(balance)s. At the current spending pace, the estimated month-end balance is %(forecast)s."
+msgstr "Twoje aktualne łączne saldo portfeli wynosi %(balance)s. Przy obecnym tempie wydatków szacowane saldo na koniec miesiąca wynosi %(forecast)s."
+
+msgid "Your largest spending category this month is %(category)s at %(amount)s. Review the biggest transactions there first, then set a monthly category limit."
+msgstr "Największa kategoria wydatków w tym miesiącu to %(category)s: %(amount)s. Najpierw przejrzyj największe transakcje, a następnie ustaw miesięczny limit kategorii."
+
+msgid "Your money, clearly planned"
+msgstr "Twoje pieniądze, jasno zaplanowane"
+
+msgid "Your money, one clear system"
+msgstr "Twoje pieniądze w jednym przejrzystym systemie"
+
+msgid "Your plan reserves at least 20% of planned income for savings and goals."
+msgstr "Twój plan przeznacza co najmniej 20% planowanego dochodu na oszczędności i cele."
+
+msgid "Your recent activity will appear here."
+msgstr "Tutaj pojawi się Twoja ostatnia aktywność."
+
+msgid "Your smart budget plan"
+msgstr "Twój inteligentny plan budżetu"
+
+msgid "Your wallets"
+msgstr "Twoje portfele"
+
+msgid "of spending"
+msgstr "wydatków"
+
+msgid "should go."
+msgstr "powinny trafiać."
+
+msgid "to save"
+msgstr "do oszczędzenia"
+
